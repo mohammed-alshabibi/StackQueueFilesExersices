@@ -10,6 +10,7 @@
             string input = Console.ReadLine();
             //Console.WriteLine("Postfix Expression: " + PostFixExpression(input));
             Console.WriteLine("Reversed String: " + ReverseString(input));
+            BrowserHistory();
         }
         // postfix using stack
         public static int PostFixExpression(string input)
@@ -59,6 +60,55 @@
                 reversed[i] = stack.Pop();
             }
             return new string(reversed);
+        }
+        // browser history navigation using stack
+        public static void BrowserHistory()
+        {
+            Stack<string> backStack = new Stack<string>();
+            Stack<string> forwardStack = new Stack<string>();
+            string currentPage = "Home";
+            while (true)
+            {
+                Console.WriteLine($"Current Page: {currentPage}");
+                Console.WriteLine("Enter 'b' for back, 'f' for forward, 'v' for visit a new page, or 'q' to quit:");
+                string input = Console.ReadLine();
+                if (input == "b")
+                {
+                    if (backStack.Count > 0)
+                    {
+                        forwardStack.Push(currentPage);
+                        currentPage = backStack.Pop();
+                    }
+                    else
+                    {
+                        Console.WriteLine("No pages in back stack.");
+                    }
+                }
+                else if (input == "f")
+                {
+                    if (forwardStack.Count > 0)
+                    {
+                        backStack.Push(currentPage);
+                        currentPage = forwardStack.Pop();
+                    }
+                    else
+                    {
+                        Console.WriteLine("No pages in forward stack.");
+                    }
+                }
+                else if (input == "v")
+                {
+                    Console.Write("Enter the URL of the page to visit: ");
+                    string url = Console.ReadLine();
+                    backStack.Push(currentPage);
+                    currentPage = url;
+                    forwardStack.Clear(); // Clear forward stack when visiting a new page
+                }
+                else if (input == "q")
+                {
+                    break;
+                }
+            }
         }
     }
 }
