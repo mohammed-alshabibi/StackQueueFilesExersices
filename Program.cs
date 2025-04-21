@@ -11,6 +11,16 @@
             //Console.WriteLine("Postfix Expression: " + PostFixExpression(input));
             Console.WriteLine("Reversed String: " + ReverseString(input));
             BrowserHistory();
+            Console.WriteLine("Enter a string with HTML/XML tags: ");
+            string tagInput = Console.ReadLine();
+            if (ValidateTags(tagInput))
+            {
+                Console.WriteLine("Tags are valid.");
+            }
+            else
+            {
+                Console.WriteLine("Tags are invalid.");
+            }
         }
         // postfix using stack
         public static int PostFixExpression(string input)
@@ -109,6 +119,27 @@
                     break;
                 }
             }
+        }
+        //XML/HTML tag validation using stack
+        public static bool ValidateTags(string input)
+        {
+            Stack<string> stack = new Stack<string>();
+            string[] tokens = input.Split(new char[] { '<', '>' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string token in tokens)
+            {
+                if (token.StartsWith("/"))
+                {
+                    if (stack.Count == 0 || stack.Pop() != token.Substring(1))
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    stack.Push(token);
+                }
+            }
+            return stack.Count == 0;
         }
     }
 }
