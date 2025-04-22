@@ -6,21 +6,21 @@
         static Stack<string> PostfixExp = new Stack<string>();
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter an Expression: ");
-            string input = Console.ReadLine();
-            //Console.WriteLine("Postfix Expression: " + PostFixExpression(input));
-            Console.WriteLine("Reversed String: " + ReverseString(input));
-            BrowserHistory();
-            Console.WriteLine("Enter a string with HTML/XML tags: ");
-            string tagInput = Console.ReadLine();
-            if (ValidateTags(tagInput))
-            {
-                Console.WriteLine("Tags are valid.");
-            }
-            else
-            {
-                Console.WriteLine("Tags are invalid.");
-            }
+            //Console.WriteLine("Enter an Expression: ");
+            //string input = Console.ReadLine();
+            ////Console.WriteLine("Postfix Expression: " + PostFixExpression(input));
+            //Console.WriteLine("Reversed String: " + ReverseString(input));
+            //BrowserHistory();
+            //Console.WriteLine("Enter a string with HTML/XML tags: ");
+            //string tagInput = Console.ReadLine();
+            //if (ValidateTags(tagInput))
+            //{
+            //    Console.WriteLine("Tags are valid.");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Tags are invalid.");
+            //}
             /////////////////////////////////////////
             Console.WriteLine("Enter How many number in the queue: ");
             int count = int.Parse(Console.ReadLine());
@@ -31,10 +31,12 @@
                 int number = int.Parse(Console.ReadLine());
                 queue.Enqueue(number);
             }
-            Console.WriteLine("Enter K: ");
-            int K = int.Parse(Console.ReadLine());
-            Queue<int> rotatedQueue = RotateQueueElements(queue, K);
-            Console.WriteLine($"Rotated Queue {string.Join(", ", rotatedQueue)}");
+            //Console.WriteLine("Enter K: ");
+            //int K = int.Parse(Console.ReadLine());
+            //Queue<int> rotatedQueue = RotateQueueElements(queue, K);
+            //Console.WriteLine($"Rotated Queue {string.Join(", ", rotatedQueue)}");
+            Queue<int> sortedQueue = SortQueue(queue);
+            Console.WriteLine($"Sorted list {string.Join(", ", sortedQueue)}");
         }
         // postfix using stack
         public static int PostFixExpression(string input)
@@ -171,6 +173,38 @@
                 queue.Enqueue(item);
             }
             return queue;
+        }
+        // sort a queue using only queue operations
+        public static Queue<int> SortQueue(Queue<int> queue)
+        {
+            int count = queue.Count;
+            int min = queue.Min();
+            Queue<int> sortedQueue = new Queue<int>();
+            bool flag = false;
+            while(count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    
+                    int item = queue.Dequeue();
+                    
+                    if (item == min)
+                    {
+                        
+                        min = queue.Min();
+                        sortedQueue.Enqueue(item);
+                    }
+                    else
+                    {
+                        
+                        queue.Enqueue(item);
+
+                    }
+                }
+                count--;
+            }
+            
+            return sortedQueue;
         }
     }
 }
