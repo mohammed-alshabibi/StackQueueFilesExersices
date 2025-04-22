@@ -21,15 +21,29 @@
             {
                 Console.WriteLine("Tags are invalid.");
             }
+            /////////////////////////////////////////
+            Console.WriteLine("Enter How many number in the queue: ");
+            int count = int.Parse(Console.ReadLine());
+            Queue<int> queue = new Queue<int>();
+            for (int i = 0; i < count; i++)
+            {
+                Console.WriteLine($"Enter a number {i+1}: ");
+                int number = int.Parse(Console.ReadLine());
+                queue.Enqueue(number);
+            }
+            Console.WriteLine("Enter K: ");
+            int K = int.Parse(Console.ReadLine());
+            Queue<int> rotatedQueue = RotateQueueElements(queue, K);
+            Console.WriteLine($"Rotated Queue {string.Join(", ", rotatedQueue)}");
         }
         // postfix using stack
         public static int PostFixExpression(string input)
         {
-            string[] tokens = input.Split(' ');
+            string[] tokens = input.Split(' ');//split input and store in array
             Stack<int> stack = new Stack<int>();
             foreach (string token in tokens)
             {
-                if (int.TryParse(token, out int number))
+                if (int.TryParse(token, out int number))// 
                 {
                     stack.Push(number);
                 }
@@ -140,6 +154,23 @@
                 }
             }
             return stack.Count == 0;
+        }
+        //Rotate queue elements by K
+        public static Queue<int> RotateQueueElements(Queue<int> queue,  int K)
+        {
+            int n =queue.Count;
+            if(K<=0 || n==0)
+            {
+                return queue;
+            }
+            K = K % n;
+            
+            for (int i = 0; i < K; i++)
+            {
+                int item = queue.Dequeue();
+                queue.Enqueue(item);
+            }
+            return queue;
         }
     }
 }
